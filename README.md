@@ -1,4 +1,4 @@
-#Neural Network from scratch
+#neural-network-from-scratch
 This repository contains the code for implementing a neural network from scratch using Python.
 
 In this project, I aim to build a neural network from scratch in Python. The implementation will cover the 
