@@ -9,4 +9,6 @@ learning_rate = 0.3
 # Creating basic neural network
 
 n = nn.neuralNetwork(input_nodes, hidden_nodes, output_nodes, learning_rate)
-print(n)
+
+output = n.query([1.0,0.5,-1.5])
+print(output)
