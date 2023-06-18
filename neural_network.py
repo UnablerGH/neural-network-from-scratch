@@ -25,10 +25,43 @@ class neuralNetwork:
         # activation function is the sigmoid function
         self.activation_function = lambda x: scipy.special.expit(x)
 
+        pass
+
     # train the neural network
 
-    def train():
+    def train(self, inputs_list, targets_list):
+        # convert inputs list to 2D array
+        inputs = np.array(inputs_list, ndmin=2).T
+        # ndmin = 2 means that the array will be at least 2D, even if the input is 1D
+        targets = np.array(targets_list, ndmin=2).T
+
+        # calculate signals into hidden layer
+        hidden_inputs = np.dot(self.wih, inputs)
+        # apply sigmoid function to hidden outputs
+        hidden_outputs = self.activation_function(hidden_inputs)
+
+        # calculate signals into final output layer
+        final_inputs = np.dot(self.who, hidden_outputs)
+        # apply sigmoid function to final output
+        final_outputs = self.activation_function(final_inputs)
+
+        # output layer error is the (target - actual)
+        output_errors = targets - final_outputs
+
+        # hidden layer error is the output_errors, split by weights, recombined at hidden nodes
+        hidden_errors = np.dot(self.who.T, output_errors)
+
+        # update the weights for the links between the hidden and output layers
+        self.who += self.lr * np.dot((output_errors * final_outputs * (1.0 - final_outputs)),
+                                        np.transpose(hidden_outputs))
+        
+        # update the weights for the links between the input and hidden layers
+        self.wih += self.lr * np.dot((hidden_errors * hidden_outputs * (1.0 - hidden_outputs)),
+                                        np.transpose(inputs))
+        
         pass
+
+
     
     # query the neural network
     def query(self, inputs_list):
